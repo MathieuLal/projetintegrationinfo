@@ -34,4 +34,3 @@ async def get_tokens_list(address):
 if __name__ == "__main__":
     asyncio.run(get_tokens_list(BTC_address))
     asyncio.run(get_tokens_list(USDC_address))
-    

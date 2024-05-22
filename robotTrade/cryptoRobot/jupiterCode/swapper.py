@@ -36,7 +36,7 @@ async def swap():
     result = await async_client.send_raw_transaction(txn=bytes(signed_txn), opts=opts)
     print(result.to_json())
     transaction_id = json.loads(result.to_json())['result']
-    print(f"Transaction sent: https://explorer.solana.com/tx/{transaction_id}") 
+    print(f"Transaction sent: https://explorer.solana.com/tx/{transaction_id}") # URL SolScan
 
 if __name__ == "__main__":
     asyncio.run(swap())
