@@ -14,6 +14,8 @@ from jupiter_python_sdk.jupiter import Jupiter
 
 import asyncio
 
+# Ce code retour plein de Token différent listé sur Jupiter Station, leur source, leur adresse,  leur ticker  ...
+
 private_key = Keypair.from_bytes(base58.b58decode("Mettre la private key du wallet"))
 async_client = AsyncClient("Mettre votre RPC")
 #async_client = AsyncClient("RPC (devnet)")
