@@ -1,0 +1,19 @@
+# Regarde les SMA de 200 et 10 jour et fait un trade quand que le SMA10 croise les chandelles et change l'action 
+# selon si on ai en-dessous ou haut-dessus du 200 SMA
+strategy("Simple pullback strategy", overlay = true)
+
+MA200 = ta.sma(close, 200)
+MA10 = ta.sma(close, 10)
+
+buyCondition = close>MA200 and close<MA10 and strategy.position_size == 0
+
+sellCondition = close > MA10 and strategy.position_size > 0
+
+if buyCondition
+    strategy.entry("Long", strategy.long, 1)
+    
+if sellCondition
+    strategy.close("Long")
+
+plot(MA200, color = color.blue)
+plot(MA10, color= color.red)

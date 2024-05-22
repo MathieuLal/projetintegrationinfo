@@ -1,0 +1,7 @@
+pip install streamlit
+pip install matplotlib
+pip install yfinance
+pip install pytz
+
+pour partir le code:
+streamlit run streamlitCode.py

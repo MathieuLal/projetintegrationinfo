@@ -1,0 +1,11 @@
+# J'ai utiliser ce code lorsque je voulais voir si le webhook et le flask python fonctionnaient et vérifier le message que cela envoyait
+strategy("Verif WebHook", overlay=true)
+
+ticker = syminfo.ticker
+prix = close
+couleur = close > open ? "Vert" : "Rouge"
+
+if couleur == "Vert"
+    alert('{ "ticker": "' + ticker + '", "prix": "' + str.tostring(prix) + '", "time": "'+ str.tostring(1) + '", "action": "buy"  }')
+if couleur == "Rouge"
+    alert('{ "ticker": "' + ticker + '", "prix": "' + str.tostring(prix) + '", "action": "sell"  }')

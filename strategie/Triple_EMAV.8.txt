@@ -1,0 +1,24 @@
+# Ce code long lorsque EMA 50 croise le EMA 200 par en-dessous et ferme la position si
+# EMA 25 et EMA 50 se croisent 
+
+strategy("Triple EMA", overlay=true)
+
+
+ema200 = ta.ema(close, 200)
+ema50 = ta.ema(close, 50)
+ema25 = ta.ema(close, 25)
+
+longCondition = ta.crossover(ema50, ema200)
+
+FermetureCondition = ta.crossover(ema25, ema50)
+FermetureCondition2 = ta.crossunder(ema25, ema50)
+
+if (longCondition)
+    strategy.entry("Long", strategy.long)
+    
+if (FermetureCondition or FermetureCondition2)
+    strategy.close("Long")
+
+plot(ema200, color=color.blue, linewidth=3)
+plot(ema50, color=color.red, linewidth=3)
+plot(ema25, color=color.green, linewidth=3)

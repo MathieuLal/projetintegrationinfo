@@ -1,0 +1,17 @@
+# Lorsque le VWAP et les chandelles croisent, le code fait un trade.
+# VWAP: on multiplie chaque prix de transaction par le volume échangé à ce prix, puis on divise 
+# la somme de ces valeurs par le volume total échangé sur la période
+strategy("Stratégie VWAP", overlay=true)
+
+vwapValue = ta.vwap(source=close)
+
+buyCondition = close > vwapValue
+sellCondition = close < vwapValue
+
+strategy.entry("Achat", strategy.long, when=buyCondition)
+strategy.close("Achat", when=sellCondition)
+
+strategy.entry("Vente", strategy.short, when=sellCondition)
+strategy.close("Vente", when=buyCondition)
+
+plot(vwapValue, title="VWAP", color=color.blue, linewidth=2)

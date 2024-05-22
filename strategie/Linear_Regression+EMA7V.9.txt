@@ -1,0 +1,20 @@
+# lorsque la ligne de régression et le EMA se coupe, il fait un trade
+strategy("Linear Regression + EMA 7", overlay = true)
+
+ema7 = ta.ema(close, 7)
+linReg = ta.linreg(close, 11, 11)
+
+enterLong = ta.crossover(ema7, linReg)
+exitLong = ta.crossunder(ema7, linReg)
+
+if enterLong
+    strategy.entry("Long", strategy.long)
+
+if exitLong
+    strategy.close("Long")
+
+plot(ema7, color=color.blue, title="EMA 7")
+plot(linReg, color=color.red, title="Linear Regression")
+
+plotshape(enterLong, color=color.green, style=shape.triangleup, size=size.small, title="Enter Long")
+plotshape(exitLong, color=color.red, style=shape.triangledown, size=size.small, title="Exit Long")

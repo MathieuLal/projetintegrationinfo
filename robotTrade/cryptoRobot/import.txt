@@ -1,0 +1,8 @@
+pip install Flask
+pip install solana
+pip install solders
+pip install jupiter-python-sdk
+pip install base58
+
+jupiter wrapper:
+https://github.com/0xTaoDev/jupiter-python-sdk

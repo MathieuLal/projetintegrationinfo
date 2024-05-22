@@ -1,0 +1,15 @@
+# Regard si le stock est over sold et over bought et achète lorsque c'est over sold et vend lorsque c'est over bought
+strategy("Stratégie RSI", overlay=true)
+
+overboughtLevel = 80
+oversoldLevel = 20
+
+rsiValue = ta.rsi(close, 14)
+
+buyCondition = rsiValue < oversoldLevel
+sellCondition = rsiValue > overboughtLevel
+
+strategy.entry("Achat", strategy.long, when=buyCondition)
+strategy.close("Achat", when=sellCondition)
+
+plot(rsiValue, title="RSI", color=color.blue, linewidth=2)

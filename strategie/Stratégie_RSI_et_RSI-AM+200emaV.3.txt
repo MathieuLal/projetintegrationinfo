@@ -1,0 +1,31 @@
+# Même chose que le Stratégie RSI et RSI-AM, mais regarde la position relative du prix dans les 200 derniers jours
+# pour sortir ou rentrer dans un trade
+strategy("Stratégie RSI et RSI-AM + 200ema", overlay=true)
+
+rsiValue = ta.rsi(close, 14)
+rsiAMValue = ta.rsi(close - ta.sma(close, 9), 14)
+ema200 = ta.ema(close, 200)
+
+auDessusEMA = close > ema200
+enDessousEMA = close < ema200
+buyCondition = ta.crossover(rsiValue, rsiAMValue)
+sellCondition = ta.crossunder(rsiValue, rsiAMValue)
+
+stopLossPercent = input(10)
+stopLossLong = strategy.position_avg_price * (1 - stopLossPercent / 100)
+stopLossShort = strategy.position_avg_price * (1 + stopLossPercent / 100)
+
+if buyCondition or stopLossShort
+    if (enDessousEMA or stopLossShort) and strategy.position_size>0
+        strategy.close("Vente")
+    if auDessusEMA
+        strategy.entry("Achat", strategy.long)
+
+if sellCondition or stopLossLong
+    if (auDessusEMA or stopLossLong) and strategy.position_size>0
+        strategy.close("Achat")
+    if enDessousEMA 
+        strategy.entry("Vente", strategy.short)
+
+plot(rsiValue, title="RSI", color=color.blue, linewidth=2)
+plot(rsiAMValue, title="RSI AM", color=color.red, linewidth=2)

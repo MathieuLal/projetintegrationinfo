@@ -1,0 +1,8 @@
+pip install yfinance
+pip install schedule
+pip install termcolor
+pip install streamlit
+pip install pycoingecko
+
+pour partir le code StableCoinArbitrage:
+streamlit run StableCoinArbitrage.py

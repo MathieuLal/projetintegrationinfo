@@ -1,0 +1,17 @@
+# Lorsque le EMA et la chandelle se croise, cela ouvre ou ferme un trade
+strategy("EMA200 crossing Short/Long", overlay = true)
+
+ema200 = ta.ema(close, 200)
+
+candleCouleur = close > open ? "Vert" : "Rouge"
+
+if ta.crossunder(ema200, close)
+    strategy.entry("Long", strategy.long, 1)
+if ta.crossover(ema200, close)
+    strategy.entry("Short", strategy.short, 1)
+if 0 > strategy.position_size and candleCouleur == "Rouge"
+    strategy.close("Long")
+if 0 > strategy.position_size and candleCouleur == "Vert"
+    strategy.close("Short")
+
+plot(close)

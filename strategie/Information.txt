@@ -1,0 +1,2 @@
+
+#Ces codes sont en pineScript et sont utilisés dans le pine editor de TradingView

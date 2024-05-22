@@ -1,0 +1,20 @@
+# Regarde lorsque le SMA du rsi croise la ligne du rsi
+# donc le croisement du prix moyen des dernier jour et de la pression d'achat
+strategy("Stratégie RSI et RSI-AM", overlay=true)
+
+rsiValue = ta.rsi(close, 14)
+rsiAMValue = ta.rsi(close - ta.sma(close, 9), 14)
+
+buyCondition = ta.crossover(rsiValue, rsiAMValue)
+sellCondition = ta.crossunder(rsiValue, rsiAMValue)
+
+if buyCondition
+    strategy.close("Vente")
+    strategy.entry("Achat", strategy.long)
+
+if sellCondition
+    strategy.close("Achat")
+    strategy.entry("Vente", strategy.short)
+
+plot(rsiValue, title="RSI", color=color.blue, linewidth=2)
+plot(rsiAMValue, title="RSI AM", color=color.red, linewidth=2)

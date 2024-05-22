@@ -1,0 +1,18 @@
+#Lorsque les deux EMA croisent rentre ou sort d'un trade
+strategy("Simple Moving Average Strategy")
+
+ema20 = ema(close, 20)
+ema50 = ema(close, 50)
+
+long = ema20 > ema50
+short = ema20< ema50
+
+start = timestamp(2023, 10, 1, 0, 0)
+end = timestamp(2024, 10, 1, 0, 0)
+
+if time >= start and time <= end
+    strategy.entry("Long", strategy.long, 10, when = long)
+    strategy.entry("Short", strategy.short, 10, when = short)
+
+strategy.close("Long", when = short)
+strategy.close("Short", when = long)

@@ -1,0 +1,16 @@
+# regarde le flux d'argent dans le marcher et utiliser un SMA pour s'orienter
+strategy("MFI test", overlay = true)
+
+x = ta.mfi(close, 14)
+
+if x < 50 and close > ta.sma(close, 200)
+    strategy.entry("long", strategy.long, 1)
+
+stopLoss = 0.10
+takingProfit = 0.30
+
+longStop = strategy.position_avg_price*(1-stopLoss)
+longProfit = strategy.position_avg_price*(1+takingProfit)
+
+if strategy.position_size>0
+    strategy.exit("long", stop = longStop, limit = longProfit)

@@ -1,0 +1,36 @@
+#Les Bandes de Bollinger sont utilisées pour identifier les conditions de surachat et de survente sur 
+#les marchés financiers et pour anticiper les retournements de tendance. Elles se resserrent lorsque la volatilité 
+#diminue et s'élargissent lorsque la volatilité augmente
+
+strategy("MBB Strategy", overlay=true, currency = currency.NONE, initial_capital = 100, default_qty_type = strategy.percent_of_equity, default_qty_value = 100)
+src = input(close)
+length = input.int(34, minval=1)
+mult = input.float(2.0, minval=0.001, maxval=50)
+
+basis = ta.sma(src, length)
+dev = ta.stdev(src, length)
+dev2 = mult * dev
+
+upper1 = basis + dev
+lower1 = basis - dev
+upper2 = basis + dev2
+lower2 = basis - dev2
+
+colorBasis = src >= basis ? color.new(color.blue, 0) : color.new(color.orange, 0)
+
+pBasis = plot(basis, linewidth=2, color=colorBasis)
+pUpper1 = plot(upper1, color=color.blue, style=plot.style_circles)
+pUpper2 = plot(upper2, color=color.blue)
+pLower1 = plot(lower1, color=color.orange, style=plot.style_circles)
+pLower2 = plot(lower2, color=color.orange)
+
+fill(pBasis, pUpper2, color=color.blue, transp=80)
+fill(pUpper1, pUpper2, color=color.blue, transp=80)
+fill(pBasis, pLower2, color=color.orange, transp=80)
+fill(pLower1, pLower2, color=color.orange, transp=80)
+
+if (close > upper2)
+    strategy.entry("Long", strategy.long)
+
+if (close <= lower2)
+    strategy.close("Long")

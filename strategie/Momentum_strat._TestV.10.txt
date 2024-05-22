@@ -1,0 +1,11 @@
+# regarde la tendance des chandelles selon le type et le nombre en arrière de chandelle
+strategy("Momentum strat. test")
+momentum = close - close[50] # nombre de candle qu'on va chercher
+
+entry = momentum > 0 
+
+if entry
+    strategy.entry("long", strategy.long, 0.006)
+
+if close< ta.sma(close, 200)
+    strategy.close("long")

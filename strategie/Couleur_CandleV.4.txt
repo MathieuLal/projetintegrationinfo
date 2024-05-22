@@ -1,0 +1,13 @@
+# Retourne la couleur de la dernière chandelle
+strategy("Couleur candle")
+
+couleur = close > open ? "Vert" : "Rouge"
+start = timestamp(2023, 1, 4, 0, 0)
+end = timestamp(2024, 1, 18, 0, 0)
+
+if time >= start and time <= end
+    if couleur == "Vert" and strategy.position_size == 0
+        strategy.entry("Long", strategy.long)
+
+    if couleur == "Rouge" and strategy.position_size > 0
+        strategy.close("Long")
